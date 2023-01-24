@@ -1,5 +1,3 @@
-import React from "react";
-
 import { styled } from "@mui/material/styles";
 import { Avatar, Box, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";

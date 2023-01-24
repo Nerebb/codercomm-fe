@@ -6,7 +6,7 @@ export const cloudinaryUpload = async (image) => {
   try {
     const formData = new FormData();
     formData.append("file", image);
-    // formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
     const response = await axios({
       url: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
       method: "POST",

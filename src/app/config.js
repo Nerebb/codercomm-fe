@@ -1,5 +1,5 @@
 export const BASE_URL = process.env.REACT_APP_BACKEND_API;
 export const CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-export const CLOUDINARY_UPLOAD_PRESET = '';
+export const CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
 export const POSTS_PER_PAGE = 2;
 export const COMMENTS_PER_POST = 2;

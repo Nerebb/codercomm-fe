@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import apiService from "../../app/apiService";
-// import { cloudinaryUpload } from "../../utils/cloudinary";
+import { cloudinaryUpload } from "../../utils/cloudinary";
 
 const initialState = {
   isLoading: false,
@@ -75,8 +75,8 @@ export const updateUserProfile =
         twitterLink,
       };
       if (avatarUrl instanceof File) {
-        // const imageUrl = await cloudinaryUpload(avatarUrl);
-        // data.avatarUrl = imageUrl;
+        const imageUrl = await cloudinaryUpload(avatarUrl);
+        data.avatarUrl = imageUrl;
       }
       const response = await apiService.put(`/users/${userId}`, data);
       dispatch(slice.actions.updateUserProfileSuccess(response.data));

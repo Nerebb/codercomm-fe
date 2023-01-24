@@ -17,6 +17,7 @@ function Profile({ profile }) {
           <ProfileSocialInfo profile={profile} />
         </Stack>
       </Grid>
+
       <Grid item xs={12} md={8}>
         <Stack spacing={3}>
           {user._id === profile._id && <PostForm />}

@@ -1,85 +1,73 @@
-import React from "react";
-import { Stack, Card, InputAdornment } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { Link, Card, CardHeader, Stack, Box } from "@mui/material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
-import { LoadingButton } from "@mui/lab";
-import { useForm } from "react-hook-form";
-import { FormProvider, FTextField } from "../../components/form";
-import useAuth from "../../hooks/useAuth";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile } from "./userSlice";
+const IconStyle = styled(Box)(({ theme }) => ({
+  width: 20,
+  height: 20,
+  marginTop: 1,
+  flexShrink: 0,
+  marginRight: theme.spacing(2),
+}));
 
-const SOCIAL_LINKS = [
-  {
-    value: "facebookLink",
-    icon: <FacebookIcon sx={{ fontSize: 30 }} />,
-  },
-  {
-    value: "instagramLink",
-    icon: <InstagramIcon sx={{ fontSize: 30 }} />,
-  },
-  {
-    value: "linkedinLink",
-    icon: <LinkedInIcon sx={{ fontSize: 30 }} />,
-  },
-  {
-    value: "twitterLink",
-    icon: <TwitterIcon sx={{ fontSize: 30 }} />,
-  },
-];
+function ProfileSocialInfo({ profile }) {
+  const { facebookLink, instagramLink, linkedinLink, twitterLink } = profile;
 
-function ProfileSocialInfo() {
-  const { user } = useAuth();
-  const isLoading = useSelector((state) => state.user.isLoading);
-
-  const defaultValues = {
-    facebookLink: user?.facebookLink || "",
-    instagramLink: user?.instagramLink || "",
-    linkedinLink: user?.linkedinLink || "",
-    twitterLink: user?.twitterLink || "",
-  };
-
-  const methods = useForm({
-    defaultValues,
-  });
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
-  const dispatch = useDispatch();
-
-  const onSubmit = async (data) => {
-    dispatch(updateUserProfile({ userId: user._id, ...data }));
-  };
+  const SOCIALS = [
+    {
+      name: "Linkedin",
+      icon: (
+        <IconStyle color="#006097">
+          <LinkedInIcon />
+        </IconStyle>
+      ),
+      href: linkedinLink,
+    },
+    {
+      name: "Twitter",
+      icon: (
+        <IconStyle color="#1877F2">
+          <TwitterIcon />
+        </IconStyle>
+      ),
+      href: twitterLink,
+    },
+    {
+      name: "Facebook",
+      icon: (
+        <IconStyle color="#1C9CEA">
+          <FacebookIcon />
+        </IconStyle>
+      ),
+      href: facebookLink,
+    },
+    {
+      name: "Instagram",
+      icon: (
+        <IconStyle color="#D7336D">
+          <InstagramIcon />
+        </IconStyle>
+      ),
+      href: instagramLink,
+    },
+  ];
 
   return (
-    <Card sx={{ p: 3 }}>
-      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={3} alignItems="flex-end">
-          {SOCIAL_LINKS.map((link) => (
-            <FTextField
-              key={link.value}
-              name={link.value}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">{link.icon}</InputAdornment>
-                ),
-              }}
-            />
-          ))}
-
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isSubmitting || isLoading}
-          >
-            Save Changes
-          </LoadingButton>
-        </Stack>
-      </FormProvider>
+    <Card>
+      <CardHeader title="Social" />
+      <Stack spacing={2} sx={{ p: 3 }}>
+        {SOCIALS.map((link) => (
+          <Stack key={link.name} direction="row" alignItems="center">
+            {link.icon}
+            <Link component="span" variant="body2" color="text.primary" noWrap>
+              {link.href}
+            </Link>
+          </Stack>
+        ))}
+      </Stack>
     </Card>
   );
 }

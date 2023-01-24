@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import apiService from "../../app/apiService";
 import { POSTS_PER_PAGE } from "../../app/config";
-import { cloudinaryUpload } from "../../utils/cloundinary";
+import { cloudinaryUpload } from "../../utils/cloudinary";
 import { getCurrentUserProfile } from "../user/userSlice";
 
 const initialState = {
